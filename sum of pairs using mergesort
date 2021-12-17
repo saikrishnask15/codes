@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdbool.h>
+bool binarySearch(int a[],int l,int h,int k){
+    if(l>h) return false;
+    int mid=(l+h)/2;
+    if((a[mid]==k))
+        return true;
+    if((a[mid]<k))
+        return binarySearch(a,mid+1,h,k);
+  return binarySearch(a,l,mid-1,k);
+}
+bool sumOfPairs(int a[],int n,int k){
+for(int i=0;i<n;i++){
+    int b=k-a[i];
+    if(binarySearch(a,i+1,n,b)==true){
+        return true;
+    }
+ 
+}
+     return false;
+}
+void merge(int a[],int l,int mid,int h){
+    int temp[h-l+1];
+    int p1=l,p2=mid+1,k=0;
+    while(p1<=mid&&p2<=h){
+        if(a[p1]<a[p2]){
+            temp[k++]=a[p1++];
+        }
+        else{
+            temp[k++]=a[p2++];
+        }
+    }
+    while(p1<=mid){
+        temp[k++]=a[p1++];
+    }
+    while(p2<=h){
+        temp[k++]=a[p2++];
+    }
+    for(int i=l;i<=h;i++){
+        a[i]=temp[i-l];
+    }
+  
+}
+void mergesort(int a[],int l,int h){
+              if(l==h)
+                  return;
+              int mid=(l+h)/2;
+              mergesort(a,l,mid);
+              mergesort(a,mid+1,h);
+              merge(a,l,mid,h);
+ }
+
+int main() {
+int t;
+    scanf("%d",&t);
+    while(t--){
+        int n,k;
+        scanf("%d%d",&n,&k);
+        int a[n];
+        for(int i=0;i<n;i++){
+            scanf("%d",&a[i]);
+        }
+          mergesort(a,0,n-1);
+        //    for(int i=0;i<n;i++){
+        //     printf("%d ",a[i]);
+        // }
+        if(sumOfPairs(a,n,k)==true){
+            printf("True\n");
+            }
+        else{
+            printf("False\n");
+        }
+        }
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
