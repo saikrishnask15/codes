@@ -14,6 +14,7 @@ int t;
         for(int i=0;i<n;i++){
             scanf("%ld",&arr[i]);
             sum+=arr[i];
+
         }
         printf("%ld\n",sum);
     }
